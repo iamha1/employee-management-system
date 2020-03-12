@@ -27,7 +27,7 @@ function askQuestions() {
         type: "list",
         name: "menuChoices",
         message: "Please select from the options in the menu:",
-        choices: ["Add Department", "View all Departments", "Add Role", "View all Roles", "Update Role", "Add Employee", "View all Employees", "Remove Employee","Exit"]
+        choices: ["Add Department", "View all Departments", "Add Role", "View all Roles", "Update Role", "Add Employee", "View all Employees", "Remove Employee", "Exit"]
       }
     ])
     .then(function (menuAnswers) {
@@ -85,13 +85,13 @@ function addDept() {
 }
 //View Departments
 function viewDept() {
-  connection.query("SELECT * FROM department", function(err, data) {
-    if(err){
+  connection.query("SELECT * FROM department", function (err, data) {
+    if (err) {
       throw err;
     }
     console.table(data);
     askQuestions();
-})
+  })
 }
 
 // Add Role
@@ -134,13 +134,13 @@ function addRole() {
 //View Role 
 
 function viewRole() {
-  connection.query("SELECT * FROM role", function(err, data) {
-    if(err){
+  connection.query("SELECT * FROM role", function (err, data) {
+    if (err) {
       throw err;
     }
     console.table(data);
     askQuestions();
-})
+  })
 }
 
 // Add Employee
@@ -157,23 +157,11 @@ function addEmployee() {
       name: "lastName",
       message: "Please Enter Employee's Last Name:"
     },
-    // {
-    //   type: "input",
-    //   name: "role_id",
-    //   message: "Please Enter Employee's Role ID:"
-    // },
-    // {
-    //   type: "input",
-    //   name: "manager_id",
-    //   message: "Please Enter Employee's Manager ID:"
-    // },
-    
+
   ])
     .then(function (employeeAnswers) {
       const firstName = employeeAnswers.firstName;
       const lastName = employeeAnswers.lastName;
-      // const employeeRoleID = employeeAnswers.role_id;
-      // const roleId = employeeAnswers.manager_id;
 
       connection.query(`INSERT INTO employee(first_name, last_name) VALUES('${firstName}', '${lastName}')`,
         function (err, data) {
@@ -186,44 +174,43 @@ function addEmployee() {
         }
       )
     })
-  }
-  function viewEmployees() {
-    connection.query("SELECT * FROM employee", function(err, data) {
-      if(err){
-        throw err;
-      }
-      console.table(data);
-      askQuestions();
+}
+function viewEmployees() {
+  connection.query("SELECT * FROM employee", function (err, data) {
+    if (err) {
+      throw err;
+    }
+    console.table(data);
+    askQuestions();
   })
-  }
+}
 
-  //Update Employee Role
+//Update Employee Role
 
-  function updateRole() {
-
-    connection.query('SELECT * FROM employee', function (err, res) {
-      if (err) throw err
-      console.table(res)
-      inquirer
-        .prompt([
-          {
-            type: 'Number',
-            message: 'ID of employee you would like to update?',
-            name: 'id'
-          },
-          {
-            type: 'number',
-            message: 'What new role ID are you assigning the employee?',
-            name: 'role_id'
-          }
-        ])
-        .then(answer => {
-          const query = `UPDATE employee SET role_id = '${answer.role_id}' WHERE id = ${answer.id}`
-          connection.query(query, function (err, res) {
-            if (err) throw err
-            //console.log('Role updated.')
-            askQuestions();
-          })
+function updateRole() {
+  connection.query('SELECT * FROM employee', function (err, res) {
+    if (err) throw err
+    console.table(res)
+    inquirer
+      .prompt([
+        {
+          type: 'Number',
+          message: 'ID of employee you would like to update?',
+          name: 'id'
+        },
+        {
+          type: 'number',
+          message: 'What new role ID are you assigning the employee?',
+          name: 'role_id'
+        }
+      ])
+      .then(answer => {
+        const query = `UPDATE employee SET role_id = '${answer.role_id}' WHERE id = ${answer.id}`
+        connection.query(query, function (err, res) {
+          if (err) throw err
+          //console.log('Role updated.')
+          askQuestions();
         })
-    })
-  }
+      })
+  })
+}
