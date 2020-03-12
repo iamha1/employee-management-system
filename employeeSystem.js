@@ -78,7 +78,7 @@ function addDept() {
             throw err;
           }
           console.log(`${departmentName} was added successfully!`)
-          console.table(data);
+          //console.table(data);
           askQuestions();
         })
     });
@@ -124,7 +124,7 @@ function addRole() {
             throw err;
           }
           console.log(`${roleName} was added successfully!`);
-          console.table(data);
+          //console.table(data);
           askQuestions();
         }
       )
@@ -157,31 +157,31 @@ function addEmployee() {
       name: "lastName",
       message: "Please Enter Employee's Last Name:"
     },
-    {
-      type: "input",
-      name: "role_id",
-      message: "Please Enter Employee's Role ID:"
-    },
-    {
-      type: "input",
-      name: "manager_id",
-      message: "Please Enter Employee's Manager ID:"
-    },
+    // {
+    //   type: "input",
+    //   name: "role_id",
+    //   message: "Please Enter Employee's Role ID:"
+    // },
+    // {
+    //   type: "input",
+    //   name: "manager_id",
+    //   message: "Please Enter Employee's Manager ID:"
+    // },
     
   ])
     .then(function (employeeAnswers) {
       const firstName = employeeAnswers.firstName;
       const lastName = employeeAnswers.lastName;
-      const employeeRoleID = employeeAnswers.role_id;
-      const roleId = employeeAnswers.manager_id;
+      // const employeeRoleID = employeeAnswers.role_id;
+      // const roleId = employeeAnswers.manager_id;
 
-      connection.query(`INSERT INTO employee(first_name, last_name) VALUES('${firstName}', '${lastName}', ${employeeRoleID}, ${roleId})`,
+      connection.query(`INSERT INTO employee(first_name, last_name) VALUES('${firstName}', '${lastName}')`,
         function (err, data) {
           if (err) {
             throw err;
           }
-          console.log(`${employeeRoleID} was added successfully!`);
-          console.table(data);
+          console.log(`${firstName} was added successfully!`);
+          //console.table(data);
           askQuestions();
         }
       )
@@ -221,7 +221,7 @@ function addEmployee() {
           const query = `UPDATE employee SET role_id = '${answer.role_id}' WHERE id = ${answer.id}`
           connection.query(query, function (err, res) {
             if (err) throw err
-            console.log('Role updated.')
+            //console.log('Role updated.')
             askQuestions();
           })
         })
